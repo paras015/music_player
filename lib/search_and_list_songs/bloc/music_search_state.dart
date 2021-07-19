@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-
 abstract class MusicSearchState extends Equatable{
   @override
   List<Object> get props => [];
@@ -12,7 +11,6 @@ class InitApp extends MusicSearchState{
 }
 
 class SearchStateEmpty extends MusicSearchState{
-
   @override
   String toString() => 'SearchStateEmpty';
 }

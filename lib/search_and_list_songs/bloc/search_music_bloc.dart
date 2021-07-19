@@ -1,13 +1,14 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_player/search_songs/music_search_event.dart';
-import 'package:music_player/search_songs/music_search_state.dart';
-import 'package:music_player/database.dart';
-import 'package:sembast/sembast.dart';
+import 'package:music_player/search_and_list_songs/bloc/music_search_event.dart';
+import 'package:music_player/search_and_list_songs/bloc/music_search_state.dart';
+import 'package:music_player/data/database.dart';
+import 'package:sqflite/sqflite.dart';
 
 class MusicSearchBloc extends Bloc<MusicSearchEvent, MusicSearchState>{
-  MusicSearchBloc(MusicSearchState initialState) : super(InitApp());
+  MusicSearchBloc(MusicSearchState initialState) : super(initialState);
 
-  MusicSearchState get initialState => InitApp();
+  MusicSearchState get initialState => initialState;
 
   @override
   void onTransition(Transition<MusicSearchEvent, MusicSearchState> transition) {
@@ -17,8 +18,6 @@ class MusicSearchBloc extends Bloc<MusicSearchEvent, MusicSearchState>{
 
   @override
   Stream<MusicSearchState> mapEventToState(MusicSearchEvent event) async* {
-    print("------");
-    print(event);
     yield* mapIncomingEventToState(event);
   }
 
@@ -26,9 +25,7 @@ class MusicSearchBloc extends Bloc<MusicSearchEvent, MusicSearchState>{
     yield SearchStateLoading();
     if (event is InitAppSearch){
       Database db = await getDatabaseConnection();
-      var dataStore = await getStore(db);
-      var musicList = await getMusic(dataStore, db);
-      // closeConnection(db);
+      var musicList = await getMusic(db);
       if (musicList.isEmpty){
         yield SearchStateEmpty();
       }
@@ -41,12 +38,9 @@ class MusicSearchBloc extends Bloc<MusicSearchEvent, MusicSearchState>{
       var itemList = await getRootDirectory();
       await findFiles(itemList);
       List<dynamic> list = getSongsPath();
-      print(list.length);
-      var dataStore = await getStore(db);
-      await insertMusic(list, dataStore, db);
-      var musicList = await getMusic(dataStore, db);
-      print(musicList.length);
-      // closeConnection(db);
+      await insertMusic(list, db);
+      var musicList = await getMusic(db);
+      print("Music found - ${musicList.length}");
       if (musicList.isEmpty){
         yield SearchStateEmpty();
       }
