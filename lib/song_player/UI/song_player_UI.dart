@@ -144,11 +144,12 @@ class _SongPlayer extends State<SongPlayer>{
           }
           else{
             return Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  BlocProvider.of<MusicPlayerBloc>(context).add(PauseSong(state.songsList, state.index));
-                },
-                child: Text('Go back'),
+              child: Text(
+                "Play any song to see the player",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             );
           }

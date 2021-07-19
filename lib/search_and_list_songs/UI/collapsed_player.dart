@@ -136,11 +136,11 @@ class _CollapsedPlayer extends State<CollapsedPlayer>{
           }
           else{
             return Center(
-              child: ElevatedButton(
-                onPressed: (){
-                  BlocProvider.of<MusicPlayerBloc>(context).add(PauseSong(songState.songsList, songState.index));
-                },
-                child: Text("play"),
+              child: Text(
+                "Play any song to see the player",
+                style: TextStyle(
+                  fontSize: 15,
+                ),
               ),
             );
           }
