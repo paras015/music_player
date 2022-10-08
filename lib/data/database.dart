@@ -42,6 +42,7 @@ Future<void> insertRecordInDatabase(Music music, Database database) async {
 
 Future<void> insertMusic(List<dynamic> songsList, Database database) async {
   for (int k = 0; k < songsList.length; k++){
+    print(songsList[k]);
     var retriever = new MetadataRetriever();
     var parts = songsList.elementAt(k).split('/');
     Uint8List cover;

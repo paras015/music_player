@@ -56,6 +56,7 @@ class _SongPlayer extends State<SongPlayer>{
             return FutureBuilder(
               future: getDominantColor(state.currentSong.albumArt),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                print(state.currentSong);
                 var dominant, light;
                 try{
                   dominant = snapshot.data.dominantColor.color;
